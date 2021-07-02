@@ -6,30 +6,36 @@ import dev.mai.models.Client;
 import dev.mai.repositories.ClientRepo;
 
 public class ClientServiceImpl implements ClientRepo {
+	
+	private ClientRepo clientRepo;
+	
+	public ClientServiceImpl(ClientRepo cr) {
+		this.clientRepo = cr;
+	}
 
 	@Override
 	public Client getClient(int id) {
-		return null;
+		return clientRepo.getClient(id);
 	}
 
 	@Override
 	public List<Client> getAllClients() {
-		return null;
+		return clientRepo.getAllClients();
 	}
 
 	@Override
-	public Client addClient(Client m) {
-		return null;
+	public Client addClient(Client client) {
+		return clientRepo.addClient(client);
 	}
 
 	@Override
 	public Client updateClient(Client changeClient) {
-		return null;
+		return clientRepo.updateClient(changeClient);
 	}
 
 	@Override
 	public Client deleteClient(int id) {
-		return null;
+		return clientRepo.deleteClient(id);
 	}
 
 }
