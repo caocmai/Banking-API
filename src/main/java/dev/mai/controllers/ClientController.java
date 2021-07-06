@@ -24,7 +24,7 @@ public class ClientController {
 	
 	
 	public Handler getClientById = (ctx) -> {
-		String input = ctx.pathParam("movieId");
+		String input = ctx.pathParam("clientId");
 		int id;
 		
 		if (input.matches("^-?[0-9]+")) { // Regex
