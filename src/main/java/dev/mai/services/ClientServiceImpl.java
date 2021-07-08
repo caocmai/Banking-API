@@ -38,4 +38,10 @@ public class ClientServiceImpl implements ClientService {
 		return clientRepo.deleteClient(id);
 	}
 
+//	@Override
+//	public void addClientAccount(int id) {
+//		clientRepo.addClientAccount(id);
+//		
+//	}
+
 }

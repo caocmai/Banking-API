@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.mai.models.Client;
-import dev.mai.models.Client;
 import dev.mai.util.JDBCConnection;
 
-public class ClientRepoDBImpl implements ClientRepo {
+public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 
 	public static Connection conn = JDBCConnection.getConnection();
 
@@ -31,6 +30,7 @@ public class ClientRepoDBImpl implements ClientRepo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 

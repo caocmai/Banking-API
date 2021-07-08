@@ -26,15 +26,7 @@ public class ClientController {
 	
 	public Handler getClientById = (ctx) -> {
 		String input = ctx.pathParam("clientID");
-		int id;
-		
-		if (input.matches("^-?[0-9]+")) { // Regex
-			id = Integer.parseInt(input);
-			
-		} else {
-			id = -1;
-		}
-		
+		int id = checkInt(input);
 		
 		Client client = cs.getClient(id);
 		
@@ -74,14 +66,7 @@ public class ClientController {
 	
 	public Handler deleteClient = (ctx) -> {
 		String input = ctx.pathParam("clientID");
-		int id;
-		
-		if (input.matches("^-?[0-9]+")) {
-			id = Integer.parseInt(input);
-			
-		} else {
-			id = -1;
-		}
+		int id = checkInt(input);
 		
 		Client client = cs.deleteClient(id);
 		
@@ -94,4 +79,32 @@ public class ClientController {
 //		context.result((client != null) ? gson.toJson(m) : "{}");
 
 	};
+	public Handler createAccount = (ctx) -> {
+		String input = ctx.pathParam("clientID");
+		
+		int id = checkInt(input);
+		
+		Client c = cs.getClient(id);
+		
+		if (c == null) {
+			ctx.status(404);
+			return;
+		}
+		
+		cs.addClientAccount(id);
+	
+		ctx.status(201);
+		
+		ctx.result((c != null) ? gson.toJson(c) : "did not add to db");
+	};
+	
+	private int checkInt(String input) {
+		if (input.matches("^-?[0-9]+")) {
+			return Integer.parseInt(input);
+			
+		} else {
+			return -1;
+		}
+		
+	}
 }

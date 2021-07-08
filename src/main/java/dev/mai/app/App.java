@@ -42,6 +42,9 @@ public class App {
 		app.post("/clients", cc.addClient);
 		app.put("/clients/:clientID", cc.updateClient);
 		app.delete("/clients/:clientID", cc.deleteClient);
+		
+		app.post("/clients/:clientID/accounts", cc.createAccount);
+		
 
 	}
 }
