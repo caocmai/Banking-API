@@ -5,7 +5,7 @@ import java.util.List;
 import dev.mai.models.Client;
 import dev.mai.repositories.ClientRepo;
 
-public class ClientServiceImpl implements ClientRepo {
+public class ClientServiceImpl implements ClientService {
 	
 	private ClientRepo clientRepo;
 	
