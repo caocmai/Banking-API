@@ -147,6 +147,9 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 
 	@Override
 	public Account addAccount(Client c) {
+		if (c == null) 
+			return null;
+
 		String sql = "INSERT INTO accounts VALUES (default,?) RETURNING *";
 		Account acc = null;
 		try {
