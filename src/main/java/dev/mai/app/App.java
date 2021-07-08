@@ -47,7 +47,8 @@ public class App {
 		app.delete("/clients/:clientID/accounts/:accountID", cc.deleteAnAccount);
 		app.put("/clients/:clientID/accounts/:accountID", cc.updateAccount);
 		
-		app.patch("clients/:clientID/accounts/:accountID", cc.balanceManipulation);
+		app.patch("/clients/:clientID/accounts/:accountID", cc.balanceManipulation);
+		app.patch("/clients/:clientID/accounts/:accountIDFrom/transfer/:accountIDTo", cc.transferBalance);
 
 
 	}

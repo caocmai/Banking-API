@@ -17,6 +17,4 @@ public interface ClientRepo {
 	
 	public Client deleteClient(int id);
 
-//	public void addClientAccount(Object in);
-
 }

@@ -15,8 +15,10 @@ public interface ClientService {
 	
 	public Account addAccountToClient(int id);
 	public List<Account> getAllAccountsFromClient(int clientId);
+	public Account getAnAccount(int accountId);
 	public Account getAnAccount(int clientId, int accountId);
 	public Account deleteAccount(int clientId, int accountId);
+	public Account updateAccount(Account changeAccount);
 	public Account updateAccount(int clientId, Account changeAccount);
 	
 	public List<Account> getAccountsBetween(int clientId, double min, double max);

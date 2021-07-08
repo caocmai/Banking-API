@@ -59,6 +59,11 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
+	public Account getAnAccount(int accountId) {
+		return clientRepo.getAccount(accountId);
+	}
+	
+	@Override
 	public Account getAnAccount(int clientId, int accountId) {
 		Client c = clientRepo.getClient(clientId);
 		Account a = clientRepo.getAccount(accountId);
@@ -76,6 +81,11 @@ public class ClientServiceImpl implements ClientService {
 			return null;
 		}
 		return a;
+	}
+	
+	@Override
+	public Account updateAccount(Account changeAccount) {
+		return clientRepo.updateAccount(changeAccount);
 	}
 
 	@Override
@@ -110,5 +120,7 @@ public class ClientServiceImpl implements ClientService {
 
 		return filteredAccs;
 	}
+
+	
 
 }

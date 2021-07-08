@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
+//import com.google.gson.JsonElement;
+//import com.google.gson.JsonObject;
 
 //import dev.mai.app.App;
 import dev.mai.models.Account;
@@ -97,13 +99,6 @@ public class ClientController {
 		String clientId = ctx.pathParam("clientID");
 		
 		int id = checkInt(clientId);
-		
-//		Client c = cs.getClient(id);
-//		
-//		if (c == null) {
-//			ctx.status(404);
-//			return;
-//		}
 		
 		Account acc = cs.addAccountToClient(id);
 		if (acc == null) {
@@ -206,36 +201,98 @@ public class ClientController {
 		
 		int cID = checkInt(clientId);
 		int aID = checkInt(accountId);
+
+		Account a = cs.getAnAccount(cID, aID);
+		if (a == null) {
+			ctx.status(404);
+			return;
+		}
 		
-//		CommandJson cj = gson.fromJson(ctx.body(), CommandJson.class);
+		CommandJson cj = gson.fromJson(ctx.body(), CommandJson.class);
+		if (cj == null ) {
+			ctx.status(404);
+			return;
+		}
+		
+		String command = cj.getCommand();
+		Double amount = cj.getAmount();
+		
+		if (command.equals("deposit")) {
+			a.setBalance(a.getBalance()+amount);
+			a = cs.updateAccount(a.getId(), a);
+			ctx.status(200);
+			ctx.result(gson.toJson(a));
+			return;
+		} else if (command.equals("withdraw")) {
+			if (a.getBalance() < amount) {
+				log.info("Info: Withdraw can't complete because insufficient funds");
+				ctx.status(422);
+				return;
+			} else {
+				a.setBalance(a.getBalance()-amount);
+				a = cs.updateAccount(a.getId(), a);
+				ctx.status(200);
+				ctx.result(gson.toJson(a));
+			}
+		} else {
+			ctx.status(404);
+			log.info("Info: Command not valid for this route!");
+		}
 
 	};
 
-//	public Handler getFilteredAccounts = (ctx) -> {
-//
-//		String clientId = ctx.pathParam("clientID");
-//		int id = checkInt(clientId);
-//		int min = ctx.queryParam("amountGreaterThan", Integer.class).get();
-//		int max = ctx.queryParam("amountLessThan", Integer.class).get();
-//		
-//		List<Account> filteredAccs = cs.getAccountsBetween(id, min, max);
-//		if (filteredAccs.size() == 0) {
-//			log.debug("Debug: Accounts not found or Client doesn't exist.");
-//			ctx.status(404);
-//			return;
-//		}
-//		
-//		log.info("Info: Showing accounts between $" + min + " and $" + max);
-//
-//		ctx.result(gson.toJson(filteredAccs));
-//		ctx.status(200);
-//	};
-//	
-	
+	public Handler transferBalance = (ctx) -> {
+		String clientId = ctx.pathParam("clientID");
+		String fromAccount = ctx.pathParam("accountIDFrom");
+		String toAccount = ctx.pathParam("accountIDTo");
+		
+		CommandJson cj = gson.fromJson(ctx.body(), CommandJson.class);
+		if (cj == null ) {
+			ctx.status(404);
+			return;
+		}
+		String command = cj.getCommand();
+		Double amount = cj.getAmount();
+		
+		int cID = checkInt(clientId);
+		int fID = checkInt(fromAccount);
+		int tID	= checkInt(toAccount);
+		
+		Account fromAcc = cs.getAnAccount(cID, fID);
+		Account endAcc = cs.getAnAccount(tID);
+		
+		if (fromAcc == null || endAcc == null) {
+			ctx.status(404);
+			return;
+		}
+		
+		if (command.equals("transfer")) {
+			if (fromAcc.getBalance() < amount) {
+				ctx.status(422);
+				log.info("Info: Insufficient funds to transfer");
+				return;
+			}
+			
+			fromAcc.setBalance(fromAcc.getBalance()-amount);
+			endAcc.setBalance(endAcc.getBalance()+amount);
+			
+			cs.updateAccount(fromAcc.getId(), fromAcc);
+			cs.updateAccount(endAcc);
+			ctx.status(200);
+			
+			ctx.result(gson.toJson(endAcc));
+			
+		} else {
+			ctx.status(404);
+			log.info("Info: Command not valid for this route!");
+		}
+		
+		
+	};
+
 	private int checkInt(String input) {
 		if (input.matches("^-?[0-9]+")) {
 			return Integer.parseInt(input);
-			
 		} else {
 			return -1;
 		}
