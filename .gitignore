@@ -4,7 +4,7 @@
 # Log file
 *.log
 
-# src/main/java/dev/mai/util/JDBCConnection.java
+src/main/java/dev/mai/util/JDBCConnection.java
 
 # BlueJ files
 *.ctxt
