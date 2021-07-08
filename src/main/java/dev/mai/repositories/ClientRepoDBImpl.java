@@ -127,7 +127,7 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 	@Override
 	public Account getAccount(int id) {
 		String sql = "SELECT * FROM accounts WHERE a_id = ?";
-		
+
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
@@ -141,12 +141,6 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return null;
-	}
-
-	@Override
-	public List<Account> getAllAccounts() {
 
 		return null;
 	}
@@ -154,7 +148,7 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 	@Override
 	public Account addAccount(Client c) {
 		String sql = "INSERT INTO accounts VALUES (default,?) RETURNING *";
-		Account acc = null; 
+		Account acc = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// set the default balance to 0, can make this default in db
@@ -169,7 +163,7 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		// set the relationship between account and client
 		String sql2 = "INSERT INTO client_accounts VALUES (?,?)";
 		try {
@@ -186,14 +180,65 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 
 	@Override
 	public Account updateAccount(Account changeAccount) {
+		String sql = "UPDATE accounts SET balance=? WHERE a_id=? RETURNING *";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setDouble(1, changeAccount.getBalance());
+			ps.setInt(2, changeAccount.getId());
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return buildAccount(rs);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		return null;
 	}
 
 	@Override
 	public Account deleteAccount(int id) {
+		String sql = "DELETE FROM accounts WHERE a_id=? RETURNING *";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return buildAccount(rs);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		return null;
+	}
+
+	@Override
+	public List<Account> getAllAccountsFromClient(int id) {
+		String sql = "SELECT account_id FROM client_accounts WHERE client_id=?";
+		List<Account> accounts = new ArrayList<Account>();
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				accounts.add(getAccount(rs.getInt("account_id")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return accounts;
 	}
 
 	// helper method
@@ -213,26 +258,6 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 		acc.setBalance(rs.getDouble("balance"));
 
 		return acc;
-	}
-
-	public List<Account> getAllAccountsFromClient(int id) {
-		String sql = "SELECT account_id FROM client_accounts WHERE client_id=?";
-		List<Account> accounts = new ArrayList<Account>();
-		
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, id);
-
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-				accounts.add(getAccount(rs.getInt("account_id")));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return accounts;
 	}
 
 }

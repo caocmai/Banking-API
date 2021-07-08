@@ -1,8 +1,5 @@
 package dev.mai.app;
 
-
-import org.apache.log4j.Logger;
-
 import dev.mai.controllers.ClientController;
 import dev.mai.repositories.ClientRepo;
 import dev.mai.repositories.ClientRepoDBImpl;
@@ -11,11 +8,9 @@ import dev.mai.services.ClientServiceImpl;
 import io.javalin.Javalin;
 
 public class App {
-	final static Logger log = Logger.getLogger(App.class);
 
 
 	public static void main(String[] args) {
-		log.info("info: information message use this level");
 
 		// Javalin object
 		Javalin app = Javalin.create();
@@ -45,7 +40,15 @@ public class App {
 		
 		app.post("/clients/:clientID/accounts", cc.createAccount);
 		app.get("/clients/:clientID/accounts", cc.getAccountsFromClient);
+		app.get("/clients/:clientID/accounts/:accountID", cc.getAnAccount);
 		
+//		app.get("/clients/:clientID/accounts?", cc.getFilteredAccounts);
+		
+		app.delete("/clients/:clientID/accounts/:accountID", cc.deleteAnAccount);
+		app.put("/clients/:clientID/accounts/:accountID", cc.updateAccount);
+		
+		app.patch("clients/:clientID/accounts/:accountID", cc.balanceManipulation);
+
 
 	}
 }

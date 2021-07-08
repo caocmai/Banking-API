@@ -15,3 +15,15 @@
 2021-07-07 23:18:50 INFO  App:18 - info: information message use this level
 2021-07-07 23:19:24 INFO  App:18 - info: information message use this level
 2021-07-07 23:22:29 INFO  App:18 - info: information message use this level
+2021-07-08 08:51:28 DEBUG ClientController:183 - Debug: Can't update account because either client or account doesn't exist
+2021-07-08 08:51:50 DEBUG ClientController:183 - Debug: Can't update account because either client or account doesn't exist
+2021-07-08 08:52:55 DEBUG ClientController:183 - Debug: Can't update account because either client or account doesn't exist
+2021-07-08 09:32:35 INFO  ClientController:208 - Info: Showing accounts between 4 and 6000
+2021-07-08 09:32:47 INFO  ClientController:208 - Info: Showing accounts between 400 and 6000
+2021-07-08 09:32:54 INFO  ClientController:208 - Info: Showing accounts between 500 and 6000
+2021-07-08 09:33:27 INFO  ClientController:207 - Info: Showing accounts between $500 and $6000
+2021-07-08 09:33:43 INFO  ClientController:207 - Info: Showing accounts between $500 and $6000
+2021-07-08 09:33:50 INFO  ClientController:207 - Info: Showing accounts between $0 and $6000
+2021-07-08 11:10:46 INFO  ClientController:135 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-08 11:11:02 INFO  ClientController:135 - Info: Showing accounts between $4000.0 and $6000.0
+2021-07-08 11:11:05 INFO  ClientController:135 - Info: Showing accounts between $400.0 and $6000.0

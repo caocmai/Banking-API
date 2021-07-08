@@ -9,7 +9,7 @@ public interface AccountRepo {
 
 	public Account getAccount(int id);
 	
-	public List<Account> getAllAccounts();
+	public List<Account> getAllAccountsFromClient(int id);
 	
 	public Account addAccount(Client client); 
 	
