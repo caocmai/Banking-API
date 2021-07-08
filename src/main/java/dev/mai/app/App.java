@@ -1,6 +1,8 @@
 package dev.mai.app;
 
 
+import org.apache.log4j.Logger;
+
 import dev.mai.controllers.ClientController;
 import dev.mai.repositories.ClientRepo;
 import dev.mai.repositories.ClientRepoDBImpl;
@@ -9,8 +11,12 @@ import dev.mai.services.ClientServiceImpl;
 import io.javalin.Javalin;
 
 public class App {
+	final static Logger log = Logger.getLogger(App.class);
+
 
 	public static void main(String[] args) {
+		log.info("info: information message use this level");
+
 		// Javalin object
 		Javalin app = Javalin.create();
 		
@@ -19,6 +25,7 @@ public class App {
 		
 		// Run Javalin
 		app.start(); // Default port is 7000, if don't specified
+		
 	}
 
 	private static void establishRoutes(Javalin app) {
