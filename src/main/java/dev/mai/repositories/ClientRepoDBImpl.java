@@ -1,10 +1,14 @@
 package dev.mai.repositories;
 
+import java.sql.Connection;
 import java.util.List;
 
 import dev.mai.models.Client;
+import dev.mai.util.JDBCConnection;
 
 public class ClientRepoDBImpl implements ClientRepo {
+	
+	public static Connection conn = JDBCConnection.getConnection();
 
 	@Override
 	public Client getClient(int id) {
