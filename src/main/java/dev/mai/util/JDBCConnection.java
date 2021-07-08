@@ -12,9 +12,12 @@ public class JDBCConnection {
 
 		if (conn == null) {
 			// then will establish connection
-			
+			String endpoint = "caorevaturedb.c39sfp4pzzjr.us-east-2.rds.amazonaws.com";
 
-			
+			String url = "jdbc:postgresql://" + endpoint + "/postgres";
+			String username = "cao";
+			String password = "password";
+
 			try {
 				conn = DriverManager.getConnection(url, username, password);
 			} catch (SQLException e) {

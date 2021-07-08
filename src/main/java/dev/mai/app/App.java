@@ -30,7 +30,11 @@ public class App {
 		
 		
 		app.get("/", (ctx) -> ctx.result("Welcome to the Banking API!"));
-		app.get("/client/:clientId", cc.getClientById);
+		app.get("/clients/:clientID", cc.getClientById);
+		app.get("/clients", cc.getAllClients);
+		app.post("/clients", cc.addClient);
+		app.put("/clients/:clientID", cc.updateClient);
+		app.delete("/clients/:clientID", cc.deleteClient);
 
 	}
 }
