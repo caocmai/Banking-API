@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.mai.models.Account;
 import dev.mai.models.Client;
 import dev.mai.util.JDBCConnection;
 
@@ -123,6 +124,78 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 		return null;
 	}
 
+	@Override
+	public Account getAccount(int id) {
+		String sql = "SELECT * FROM accounts WHERE a_id = ?";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return buildAccount(rs);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<Account> getAllAccounts() {
+
+		return null;
+	}
+
+	@Override
+	public Account addAccount(Client c) {
+		String sql = "INSERT INTO accounts VALUES (default,?) RETURNING *";
+		Account acc = null; 
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// set the default balance to 0, can make this default in db
+			ps.setInt(1, 0);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				acc = buildAccount(rs);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// set the relationship between account and client
+		String sql2 = "INSERT INTO client_accounts VALUES (?,?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql2);
+			ps.setInt(1, c.getId());
+			ps.setInt(2, acc.getId());
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return acc;
+	}
+
+	@Override
+	public Account updateAccount(Account changeAccount) {
+
+		return null;
+	}
+
+	@Override
+	public Account deleteAccount(int id) {
+
+		return null;
+	}
+
 	// helper method
 	private Client buildClient(ResultSet rs) throws SQLException {
 		Client client = new Client();
@@ -131,6 +204,35 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 		client.setLastName(rs.getString("last_name"));
 
 		return client;
+	}
+
+	// helper method
+	private Account buildAccount(ResultSet rs) throws SQLException {
+		Account acc = new Account();
+		acc.setId(rs.getInt("a_id"));
+		acc.setBalance(rs.getDouble("balance"));
+
+		return acc;
+	}
+
+	public List<Account> getAllAccountsFromClient(int id) {
+		String sql = "SELECT account_id FROM client_accounts WHERE client_id=?";
+		List<Account> accounts = new ArrayList<Account>();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				accounts.add(getAccount(rs.getInt("account_id")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return accounts;
 	}
 
 }

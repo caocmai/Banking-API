@@ -31,7 +31,7 @@ public class App {
 	private static void establishRoutes(Javalin app) {
 		// List of routes (endpoints) for javalin
 		 
-		ClientRepo cr = new ClientRepoDBImpl();
+		ClientRepoDBImpl cr = new ClientRepoDBImpl();
 		ClientService cs = new ClientServiceImpl(cr);
 		ClientController cc = new ClientController(cs);
 		
@@ -44,6 +44,7 @@ public class App {
 		app.delete("/clients/:clientID", cc.deleteClient);
 		
 		app.post("/clients/:clientID/accounts", cc.createAccount);
+		app.get("/clients/:clientID/accounts", cc.getAccountsFromClient);
 		
 
 	}

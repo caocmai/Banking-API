@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import dev.mai.models.Account;
 import dev.mai.models.Client;
 import dev.mai.services.ClientService;
 import io.javalin.http.Handler;
@@ -84,18 +85,38 @@ public class ClientController {
 		
 		int id = checkInt(input);
 		
-		Client c = cs.getClient(id);
+//		Client c = cs.getClient(id);
+//		
+//		if (c == null) {
+//			ctx.status(404);
+//			return;
+//		}
 		
-		if (c == null) {
+		Account acc = cs.addAccountToClient(id);
+		if (acc == null) {
+			ctx.status(404);
+			return;
+		};
+	
+		ctx.status(201);
+		
+		ctx.result((acc != null) ? gson.toJson(acc) : "did not add to db");
+	};
+	public Handler getAccountsFromClient = (ctx) -> {
+		
+		String input = ctx.pathParam("clientID");
+		
+		int id = checkInt(input);
+		
+		List<Account> clients = cs.getAllAccountsFromClient(id);
+		
+		if (clients.size() == 0) {
 			ctx.status(404);
 			return;
 		}
 		
-		cs.addClientAccount(id);
-	
-		ctx.status(201);
-		
-		ctx.result((c != null) ? gson.toJson(c) : "did not add to db");
+		ctx.result(gson.toJson(clients));
+		ctx.status(200);
 	};
 	
 	private int checkInt(String input) {

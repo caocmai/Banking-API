@@ -3,6 +3,7 @@ package dev.mai.repositories;
 import java.util.List;
 
 import dev.mai.models.Account;
+import dev.mai.models.Client;
 
 public interface AccountRepo {
 
@@ -10,7 +11,7 @@ public interface AccountRepo {
 	
 	public List<Account> getAllAccounts();
 	
-	public Account addAccount(Account m); 
+	public Account addAccount(Client client); 
 	
 	public Account updateAccount(Account changeAccount);
 	

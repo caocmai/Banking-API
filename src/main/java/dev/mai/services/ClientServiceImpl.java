@@ -2,15 +2,18 @@ package dev.mai.services;
 
 import java.util.List;
 
+import dev.mai.models.Account;
 import dev.mai.models.Client;
-import dev.mai.repositories.ClientRepo;
+//import dev.mai.repositories.ClientRepo;
+import dev.mai.repositories.ClientRepoDBImpl;
 
 public class ClientServiceImpl implements ClientService {
 	
-	private ClientRepo clientRepo;
-	
-	public ClientServiceImpl(ClientRepo cr) {
+	private ClientRepoDBImpl clientRepo;
+
+	public ClientServiceImpl(ClientRepoDBImpl cr) {
 		this.clientRepo = cr;
+
 	}
 
 	@Override
@@ -38,10 +41,20 @@ public class ClientServiceImpl implements ClientService {
 		return clientRepo.deleteClient(id);
 	}
 
-//	@Override
-//	public void addClientAccount(int id) {
-//		clientRepo.addClientAccount(id);
-//		
-//	}
+	@Override
+	public Account addAccountToClient(int id) {
+		Client c = clientRepo.getClient(id);
+		if (c == null) {
+			return null;
+		}
+		
+		return clientRepo.addAccount(c);
+		
+	}
+
+	@Override
+	public List<Account> getAllAccountsFromClient(int id) {
+		return clientRepo.getAllAccountsFromClient(id);
+	}
 
 }
