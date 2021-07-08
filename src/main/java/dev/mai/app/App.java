@@ -29,6 +29,8 @@ public class App {
 		ClientController cc = new ClientController(cs);
 		
 		
-		app.get("/", (ctx) -> ctx.result("This is our Movie app home page!"));
+		app.get("/", (ctx) -> ctx.result("Welcome to the Banking API!"));
+		app.get("/client/:clientId", cc.getClientById);
+
 	}
 }

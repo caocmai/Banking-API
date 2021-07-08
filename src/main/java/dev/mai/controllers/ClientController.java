@@ -16,10 +16,10 @@ public class ClientController {
 		this.cs = cs;
 	}
 	
-	public Handler getAllMovies = (context) -> {
-		List<Client> movies = cs.getAllClients();
+	public Handler getAllClients = (context) -> {
+		List<Client> clients = cs.getAllClients();
 		
-		context.result(gson.toJson(movies));
+		context.result(gson.toJson(clients));
 	};
 	
 	
