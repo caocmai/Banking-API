@@ -103,7 +103,7 @@ public class ClientController {
 		Account acc = cs.addAccountToClient(id);
 		if (acc == null) {
 			ctx.status(404);
-			log.debug("Debug: Create a single client with id: " + id + "failed");
+			log.debug("Debug: Create a single client with id: " + id + " failed");
 			return;
 		};
 	

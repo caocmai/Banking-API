@@ -235,7 +235,10 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				accounts.add(getAccount(rs.getInt("account_id")));
+				Account a = getAccount(rs.getInt("account_id"));
+				if (a != null) {
+					accounts.add(a);
+				}
 			}
 
 		} catch (SQLException e) {

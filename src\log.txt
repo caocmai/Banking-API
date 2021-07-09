@@ -32,3 +32,5 @@
 2021-07-08 12:50:56 INFO  ClientController:279 - Info: Command not valid for this route!
 2021-07-08 13:10:55 INFO  ClientController:272 - Info: Insufficient funds to transfer
 2021-07-08 17:56:29 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-08 21:46:14 DEBUG ClientController:106 - Debug: Create a single client with id: 100failed
+2021-07-08 21:51:08 INFO  ClientController:272 - Info: Insufficient funds to transfer
