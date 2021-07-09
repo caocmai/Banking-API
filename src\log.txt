@@ -31,3 +31,4 @@
 2021-07-08 12:35:14 INFO  ClientController:231 - Info: Withdraw can't complete because insufficient funds
 2021-07-08 12:50:56 INFO  ClientController:279 - Info: Command not valid for this route!
 2021-07-08 13:10:55 INFO  ClientController:272 - Info: Insufficient funds to transfer
+2021-07-08 17:56:29 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0

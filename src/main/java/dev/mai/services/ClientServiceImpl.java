@@ -9,7 +9,7 @@ import dev.mai.models.Client;
 import dev.mai.repositories.ClientRepoDBImpl;
 
 public class ClientServiceImpl implements ClientService {
-	
+
 	private ClientRepoDBImpl clientRepo;
 
 	public ClientServiceImpl(ClientRepoDBImpl cr) {
@@ -48,9 +48,9 @@ public class ClientServiceImpl implements ClientService {
 		if (c == null) {
 			return null;
 		}
-		
+
 		return clientRepo.addAccount(c);
-		
+
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class ClientServiceImpl implements ClientService {
 	public Account getAnAccount(int accountId) {
 		return clientRepo.getAccount(accountId);
 	}
-	
+
 	@Override
 	public Account getAnAccount(int clientId, int accountId) {
 		Client c = clientRepo.getClient(clientId);
@@ -82,7 +82,7 @@ public class ClientServiceImpl implements ClientService {
 		}
 		return a;
 	}
-	
+
 	@Override
 	public Account updateAccount(Account changeAccount) {
 		return clientRepo.updateAccount(changeAccount);
@@ -92,11 +92,11 @@ public class ClientServiceImpl implements ClientService {
 	public Account updateAccount(int clientId, Account changeAccount) {
 		Client c = clientRepo.getClient(clientId);
 		Account a = clientRepo.getAccount(changeAccount.getId());
-		
+
 		if (c == null || a == null) {
 			return null;
 		}
-		
+
 		Account updatedAcc = clientRepo.updateAccount(changeAccount);
 		return updatedAcc;
 	}
@@ -107,20 +107,20 @@ public class ClientServiceImpl implements ClientService {
 		if (c == null) {
 			return null;
 		}
-		
+
 		List<Account> accs = clientRepo.getAllAccountsFromClient(c.getId());
 		List<Account> filteredAccs = new ArrayList<Account>();
 
 		for (Account a : accs) {
-			double balance = a.getBalance();
-			if (balance >= min & balance <= max) {
-				filteredAccs.add(a);
+			if (a != null) {
+				double balance = a.getBalance();
+				if (balance >= min & balance <= max) {
+					filteredAccs.add(a);
+				}
 			}
 		}
 
 		return filteredAccs;
 	}
-
-	
 
 }

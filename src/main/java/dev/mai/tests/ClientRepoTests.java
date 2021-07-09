@@ -19,7 +19,7 @@ public class ClientRepoTests {
 	static ClientRepoDBImpl cr;
 	
 	@BeforeClass
-	public static void setUPBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Run once before running tests.");
 		cr = new ClientRepoDBImpl();
 		
@@ -48,13 +48,13 @@ public class ClientRepoTests {
 		
 	}
 	
-//	@Test
-//	public void testAddClient() {
-//		Client c = new Client("Jon", "Doe");
-//		c = cr.addClient(c);
-//		assertNotEquals("Id is not equal to Java's default of 0", 0, c.getId());
-//		
-//	}
+	@Test
+	public void testAddClient() {
+		Client c = new Client("Jon", "Doe");
+		c = cr.addClient(c);
+		assertNotEquals("Id is not equal to Java's default of 0", 0, c.getId());
+		
+	}
 	
 	@Test 
 	public void testUpdateClient() {
@@ -64,18 +64,18 @@ public class ClientRepoTests {
 		assertEquals("Client first name changed to ChangedFirstName", "ChangedFirstName", updatedClient.getFirstName()); 
 	}
 	
-//	@Test 
-//	public void testDeleteClient() {
-//		int id = 6;
-//		Client c = cr.getClient(id);
-//		List<Client> clients = cr.getAllClients();
-//		int clientSize = clients.size();
-//		
-//		if (c != null) {
-//			c = cr.deleteClient(6);
-//			assertNotEquals(clientSize, cr.getAllClients().size());
-//		}	
-//	}
+	@Test 
+	public void testDeleteClient() {
+		int id = 6;
+		Client c = cr.getClient(id);
+		List<Client> clients = cr.getAllClients();
+		int clientSize = clients.size();
+		
+		if (c != null) {
+			c = cr.deleteClient(6);
+			assertNotEquals(clientSize, cr.getAllClients().size());
+		}	
+	}
 	
 	@Test 
 	public void testGetAccount() {
@@ -85,27 +85,27 @@ public class ClientRepoTests {
 		assertNotNull(a);
 	}
 	
-//	@Test
-//	public void testAddAccount() {
-//		Client c = cr.getClient(1);
-//		Account a = cr.addAccount(c);
-//		assertNotNull(a);
-//		
-//		Client c2 = cr.getClient(-1);
-//		Account a2 = cr.addAccount(c2);
-//		assertNull(a2);
-//	}
-//	
-//	@Test 
-//	public void testUpdateAccount() {
-//		Account a = cr.getAccount(1);
-//		double originalBalance = a.getBalance();
-//		a.setBalance(originalBalance + 100);
-//		
-//		a = cr.updateAccount(a);
-//		assertNotEquals("Original balance is no more", originalBalance, a.getBalance());
-//	}
-//	
+	@Test
+	public void testAddAccount() {
+		Client c = cr.getClient(1);
+		Account a = cr.addAccount(c);
+		assertNotNull(a);
+		
+		Client c2 = cr.getClient(-1);
+		Account a2 = cr.addAccount(c2);
+		assertNull(a2);
+	}
+	
+	@Test 
+	public void testUpdateAccount() {
+		Account a = cr.getAccount(1);
+		double originalBalance = a.getBalance();
+		a.setBalance(originalBalance + 100);
+		
+		a = cr.updateAccount(a);
+		assertNotEquals("Original balance is no more", originalBalance, a.getBalance());
+	}
+	
 	@Test 
 	public void testDeleteAccount() {
 		int id = 16;
@@ -126,8 +126,6 @@ public class ClientRepoTests {
 		assertNotEquals("Client 1 has at least 1 account", 0, accs.size());
 	}
 	
-	
-
 	@After
 	public void afterATest() {
 		System.out.println("This runs after every single test");
