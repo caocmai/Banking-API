@@ -34,3 +34,45 @@
 2021-07-08 17:56:29 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
 2021-07-08 21:46:14 DEBUG ClientController:106 - Debug: Create a single client with id: 100failed
 2021-07-08 21:51:08 INFO  ClientController:272 - Info: Insufficient funds to transfer
+2021-07-08 21:56:47 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-08 22:00:03 DEBUG ClientController:171 - Debug: Accounts does not exist to delete.
+2021-07-08 22:00:40 DEBUG ClientController:171 - Debug: Accounts does not exist to delete.
+2021-07-08 22:00:51 DEBUG ClientController:171 - Debug: Accounts does not exist to delete.
+2021-07-09 06:29:53 INFO  ClientController:88 - info: Delete a single client with id: 13
+2021-07-09 06:30:34 INFO  ClientController:41 - info: Got a single client with id: 1000
+2021-07-09 06:30:38 INFO  ClientController:41 - info: Got a single client with id: 1
+2021-07-09 06:33:08 INFO  ClientController:272 - Info: Insufficient funds to transfer
+2021-07-09 07:12:45 INFO  ClientController:41 - Info: Got a single client with id: 1
+2021-07-09 07:13:09 INFO  ClientController:41 - Info: Got a single client with id: 1000
+2021-07-09 07:13:19 INFO  ClientController:56 - info: Add a single client with id: 0
+2021-07-09 07:13:30 INFO  ClientController:30 - Info: Got all Clients
+2021-07-09 07:13:55 INFO  ClientController:74 - Info: Update a single client with id: 14
+2021-07-09 07:14:06 INFO  ClientController:30 - Info: Got all Clients
+2021-07-09 07:14:38 DEBUG ClientController:92 - Debug: Update a single client with id: 13failed
+2021-07-09 07:14:48 INFO  ClientController:88 - Info: Delete a single client with id: 14
+2021-07-09 07:14:57 DEBUG ClientController:92 - Debug: Update a single client with id: 110failed
+2021-07-09 07:15:30 DEBUG ClientController:106 - Debug: Create a single client with id: 100 failed
+2021-07-09 07:15:50 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-09 07:16:54 DEBUG ClientController:171 - Debug: Account does not exist to delete.
+2021-07-09 07:17:10 DEBUG ClientController:189 - Debug: Can't update account because either client or account doesn't exist
+2021-07-09 07:17:41 INFO  ClientController:228 - Info: Withdraw can't complete because insufficient funds
+2021-07-09 07:17:51 INFO  ClientController:228 - Info: Withdraw can't complete because insufficient funds
+2021-07-09 07:31:51 INFO  ClientController:41 - Info: Got a single client with id: 1
+2021-07-09 07:31:51 INFO  ClientController:41 - Info: Got a single client with id: 10
+2021-07-09 07:31:51 INFO  ClientController:56 - info: Add a single client with id: 0
+2021-07-09 07:31:51 INFO  ClientController:30 - Info: Got all Clients
+2021-07-09 07:31:51 INFO  ClientController:74 - Info: Update a single client with id: 1
+2021-07-09 07:31:51 DEBUG ClientController:92 - Debug: Update a single client with id: 5failed
+2021-07-09 07:31:52 DEBUG ClientController:92 - Debug: Update a single client with id: 11failed
+2021-07-09 07:31:54 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-09 07:31:55 DEBUG ClientController:171 - Debug: Account does not exist to delete.
+2021-07-09 07:31:55 DEBUG ClientController:171 - Debug: Account does not exist to delete.
+2021-07-09 07:31:55 DEBUG ClientController:189 - Debug: Can't update account because either client or account doesn't exist
+2021-07-09 07:31:55 DEBUG ClientController:189 - Debug: Can't update account because either client or account doesn't exist
+2021-07-09 07:36:24 INFO  ClientController:30 - Info: Got all Clients
+2021-07-09 07:38:10 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-09 07:38:19 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-09 07:38:41 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-09 07:38:59 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-09 07:51:56 INFO  ClientController:129 - Info: Showing accounts between $400.0 and $6000.0
+2021-07-09 08:11:03 DEBUG ClientController:106 - Debug: Create a single client with id: 100 failed

@@ -27,7 +27,7 @@ public class ClientController {
 	
 	public Handler getAllClients = (ctx) -> {
 		List<Client> clients = cs.getAllClients();
-		log.info("info: Got all Clients");
+		log.info("Info: Got all Clients");
 		ctx.result(gson.toJson(clients));
 		ctx.status(200);
 	};
@@ -38,7 +38,7 @@ public class ClientController {
 		int id = checkInt(clientId);
 		
 		Client client = cs.getClient(id);
-		log.info("info: Got a single client with id: " + clientId);
+		log.info("Info: Got a single client with id: " + clientId);
 		if (client != null ) {
 			ctx.result(gson.toJson(client));
 			ctx.status(200);
@@ -71,7 +71,7 @@ public class ClientController {
 			ctx.status(404);
 			return;
 		}
-		log.info("info: Update a single client with id: " + client.getId());
+		log.info("Info: Update a single client with id: " + client.getId());
 
 		ctx.result((client != null) ? gson.toJson(client) : "{}");
 	};
@@ -85,7 +85,7 @@ public class ClientController {
 		if (client != null ) {
 			ctx.result(gson.toJson(client));
 			ctx.status(204);
-			log.info("info: Delete a single client with id: " + client.getId());
+			log.info("Info: Delete a single client with id: " + client.getId());
 
 		} else {
 			ctx.status(404);
@@ -168,7 +168,7 @@ public class ClientController {
 		Account a = cs.deleteAccount(cID, aID);
 		
 		if (a == null) {
-			log.debug("Debug: Accounts does not exist to delete.");
+			log.debug("Debug: Account does not exist to delete.");
 			ctx.status(404);
 			return;
 		}
@@ -201,9 +201,9 @@ public class ClientController {
 		
 		int cID = checkInt(clientId);
 		int aID = checkInt(accountId);
-
+		Client c = cs.getClient(cID);
 		Account a = cs.getAnAccount(cID, aID);
-		if (a == null) {
+		if (a == null || c == null) {
 			ctx.status(404);
 			return;
 		}
@@ -219,7 +219,7 @@ public class ClientController {
 		
 		if (command.equals("deposit")) {
 			a.setBalance(a.getBalance()+amount);
-			a = cs.updateAccount(a.getId(), a);
+			a = cs.updateAccount(c.getId(), a);
 			ctx.status(200);
 			ctx.result(gson.toJson(a));
 			return;
@@ -230,7 +230,7 @@ public class ClientController {
 				return;
 			} else {
 				a.setBalance(a.getBalance()-amount);
-				a = cs.updateAccount(a.getId(), a);
+				a = cs.updateAccount(c.getId(), a);
 				ctx.status(200);
 				ctx.result(gson.toJson(a));
 			}
