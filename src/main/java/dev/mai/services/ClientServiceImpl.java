@@ -123,4 +123,58 @@ public class ClientServiceImpl implements ClientService {
 		return filteredAccs;
 	}
 
+	@Override
+	public Account deposit(int clientId, int accountId, double amount) {
+		Client c = clientRepo.getClient(clientId);
+		Account a = this.getAnAccount(clientId, accountId);
+		
+		if (a == null || c == null) {
+			return null;
+		}
+		
+		a.setBalance(a.getBalance()+amount);
+		a = this.updateAccount(c.getId(), a);
+		
+		return a;
+	}
+
+	@Override
+	public Account withdraw(int clientId, int accountId, double amount) {
+		Client c = clientRepo.getClient(clientId);
+		Account a = this.getAnAccount(clientId, accountId);
+		
+		if (a == null || c == null) {
+			return null;
+		}
+		
+		if (a.getBalance() < amount) {
+			return a;
+		}
+		a.setBalance(a.getBalance()-amount);
+		a = this.updateAccount(c.getId(), a);
+		
+		return a;
+	}
+
+	@Override
+	public Account transfer(int fromClientId, int fromClientAcc, int toAccountId, double amount) {
+		Account fromAcc = this.getAnAccount(fromClientId, fromClientAcc);
+		Account toAcc = this.getAnAccount(toAccountId);
+		
+		if (fromAcc == null || toAcc == null) {
+			return null;
+		}
+		
+		if (fromAcc.getBalance() < amount) {
+			return fromAcc;
+		}
+		fromAcc.setBalance(fromAcc.getBalance()-amount);
+		toAcc.setBalance(toAcc.getBalance()+amount);
+		
+		fromAcc = this.updateAccount(fromAcc.getId(), fromAcc);
+		toAcc = this.updateAccount(toAcc);
+		
+		return toAcc;
+	}
+
 }

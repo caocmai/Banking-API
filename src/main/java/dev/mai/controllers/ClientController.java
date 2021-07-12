@@ -1,5 +1,6 @@
 package dev.mai.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -201,15 +202,10 @@ public class ClientController {
 		
 		int cID = checkInt(clientId);
 		int aID = checkInt(accountId);
-		Client c = cs.getClient(cID);
-		Account a = cs.getAnAccount(cID, aID);
-		if (a == null || c == null) {
-			ctx.status(404);
-			return;
-		}
-		
+		Account originalAcc = cs.getAnAccount(cID, aID);
+
 		CommandJson cj = gson.fromJson(ctx.body(), CommandJson.class);
-		if (cj == null ) {
+		if (cj == null || originalAcc == null) {
 			ctx.status(404);
 			return;
 		}
@@ -217,22 +213,33 @@ public class ClientController {
 		String command = cj.getCommand();
 		Double amount = cj.getAmount();
 		
+		
+		ArrayList<Account> accs = new ArrayList<Account>();
+		
 		if (command.equals("deposit")) {
-			a.setBalance(a.getBalance()+amount);
-			a = cs.updateAccount(c.getId(), a);
-			ctx.status(200);
-			ctx.result(gson.toJson(a));
-			return;
-		} else if (command.equals("withdraw")) {
-			if (a.getBalance() < amount) {
-				log.info("Info: Withdraw can't complete because insufficient funds");
-				ctx.status(422);
-				return;
-			} else {
-				a.setBalance(a.getBalance()-amount);
-				a = cs.updateAccount(c.getId(), a);
+			Account updatedAcc = cs.deposit(cID, aID, amount);
+			accs.add(originalAcc);
+			accs.add(updatedAcc);
+
+			if (updatedAcc != null) {
 				ctx.status(200);
-				ctx.result(gson.toJson(a));
+				ctx.result(gson.toJson(accs));
+				return;
+			}
+			
+		} else if (command.equals("withdraw")) {
+			Account updatedAcc = cs.withdraw(cID, aID, amount);
+			accs.add(originalAcc);
+			accs.add(updatedAcc);
+			if (updatedAcc != null) {
+				if (originalAcc.getBalance() == updatedAcc.getBalance()) {
+					log.info("Info: Withdraw can't complete because insufficient funds");
+					ctx.status(422);
+					return;
+				} else {
+					ctx.status(200);
+					ctx.result(gson.toJson(accs));
+				}
 			}
 		} else {
 			ctx.status(404);
@@ -245,42 +252,36 @@ public class ClientController {
 		String clientId = ctx.pathParam("clientID");
 		String fromAccount = ctx.pathParam("accountIDFrom");
 		String toAccount = ctx.pathParam("accountIDTo");
+		int cID = checkInt(clientId);
+		int fID = checkInt(fromAccount);
+		int tID	= checkInt(toAccount);
 		
 		CommandJson cj = gson.fromJson(ctx.body(), CommandJson.class);
-		if (cj == null ) {
+		Account originalAcc = cs.getAnAccount(cID, fID);
+		ArrayList<Account> accs = new ArrayList<Account>();
+		
+		if (cj == null || originalAcc == null) {
 			ctx.status(404);
 			return;
 		}
 		String command = cj.getCommand();
 		Double amount = cj.getAmount();
+		accs.add(originalAcc);
 		
-		int cID = checkInt(clientId);
-		int fID = checkInt(fromAccount);
-		int tID	= checkInt(toAccount);
-		
-		Account fromAcc = cs.getAnAccount(cID, fID);
-		Account endAcc = cs.getAnAccount(tID);
-		
-		if (fromAcc == null || endAcc == null) {
-			ctx.status(404);
-			return;
-		}
+		// it's best that this function goes in the services 
 		
 		if (command.equals("transfer")) {
-			if (fromAcc.getBalance() < amount) {
+			if (originalAcc.getBalance() < amount) {
 				ctx.status(422);
 				log.info("Info: Insufficient funds to transfer");
 				return;
 			}
 			
-			fromAcc.setBalance(fromAcc.getBalance()-amount);
-			endAcc.setBalance(endAcc.getBalance()+amount);
+			Account updatedAcc = cs.transfer(cID, fID, tID, amount);
+			accs.add(updatedAcc);
 			
-			cs.updateAccount(fromAcc.getId(), fromAcc);
-			cs.updateAccount(endAcc);
 			ctx.status(200);
-			
-			ctx.result(gson.toJson(endAcc));
+			ctx.result(gson.toJson(accs));
 			
 		} else {
 			ctx.status(404);

@@ -22,5 +22,9 @@ public interface ClientService {
 	public Account updateAccount(int clientId, Account changeAccount);
 	
 	public List<Account> getAccountsBetween(int clientId, double min, double max);
+	
+	public Account deposit(int clientId, int accountId, double amount);
+	public Account withdraw(int clientId, int accountId, double amount);
+	public Account transfer(int fromClientId, int fromClientAcc, int toAccountId, double amount);
 
 }
