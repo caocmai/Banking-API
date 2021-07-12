@@ -12,8 +12,14 @@ import dev.mai.models.Client;
 import dev.mai.util.JDBCConnection;
 
 public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
+	
+	
+	public static Connection conn; 
 
-	public static Connection conn = JDBCConnection.getConnection();
+	public ClientRepoDBImpl(String username, String password) {
+		super();
+		conn = JDBCConnection.getConnection(username, password);
+	}
 
 	@Override
 	public Client getClient(int id) {

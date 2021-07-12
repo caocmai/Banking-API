@@ -3,6 +3,7 @@ package dev.mai.tests;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,11 +20,17 @@ import dev.mai.services.ClientServiceImpl;
 public class ClientServiceTests {
 	
 	static ClientServiceImpl cs;
+	static Scanner sc = new Scanner(System.in);
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Run once before running tests.");
-		ClientRepoDBImpl cr = new ClientRepoDBImpl();
+		System.out.println("Enter username");
+	    String username = sc.nextLine();
+	    System.out.println("Enter password");
+	    String password = sc.nextLine();
+		
+		ClientRepoDBImpl cr = new ClientRepoDBImpl(username, password);
 		cs = new ClientServiceImpl(cr);
 		
 	}

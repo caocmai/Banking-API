@@ -1,5 +1,7 @@
 package dev.mai.app;
 
+import java.util.Scanner;
+
 import dev.mai.controllers.ClientController;
 import dev.mai.repositories.ClientRepo;
 import dev.mai.repositories.ClientRepoDBImpl;
@@ -9,6 +11,7 @@ import io.javalin.Javalin;
 
 public class App {
 
+	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
 
@@ -25,8 +28,13 @@ public class App {
 
 	private static void establishRoutes(Javalin app) {
 		// List of routes (endpoints) for javalin
-		 
-		ClientRepoDBImpl cr = new ClientRepoDBImpl();
+	    System.out.println("Enter username");
+	    String username = sc.nextLine();
+	    
+	    System.out.println("Enter password");
+	    String password = sc.nextLine();
+
+		ClientRepoDBImpl cr = new ClientRepoDBImpl(username, password);
 		ClientService cs = new ClientServiceImpl(cr);
 		ClientController cc = new ClientController(cs);
 		
@@ -41,9 +49,6 @@ public class App {
 		app.post("/clients/:clientID/accounts", cc.createAccount);
 		app.get("/clients/:clientID/accounts", cc.getAccountsFromClient);
 		app.get("/clients/:clientID/accounts/:accountID", cc.getAnAccount);
-		
-//		app.get("/clients/:clientID/accounts?", cc.getFilteredAccounts);
-		
 		app.delete("/clients/:clientID/accounts/:accountID", cc.deleteAnAccount);
 		app.put("/clients/:clientID/accounts/:accountID", cc.updateAccount);
 		

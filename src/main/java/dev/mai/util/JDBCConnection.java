@@ -8,15 +8,15 @@ public class JDBCConnection {
 
 	private static Connection conn = null;
 
-	public static Connection getConnection() {
+	public static Connection getConnection(String inputUsername, String inputPassword) {
 
 		if (conn == null) {
 			// then will establish connection
 			String endpoint = "caorevaturedb.c39sfp4pzzjr.us-east-2.rds.amazonaws.com";
 
 			String url = "jdbc:postgresql://" + endpoint + "/postgres";
-			String username = "cao";
-			String password = "password";
+			String username = inputUsername;
+			String password = inputPassword;
 
 			try {
 				conn = DriverManager.getConnection(url, username, password);
