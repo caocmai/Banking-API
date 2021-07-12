@@ -27,18 +27,20 @@ public class App {
 	}
 
 	private static void establishRoutes(Javalin app) {
-		// List of routes (endpoints) for javalin
-	    System.out.println("Enter username");
+//		System.out.println("Enter AWS your root link to RDS");
+//		String link = sc.nextLine();
+//	
+	    System.out.println("Enter your PostgreSQL username");
 	    String username = sc.nextLine();
 	    
-	    System.out.println("Enter password");
+	    System.out.println("Enter your PostgresSQL password");
 	    String password = sc.nextLine();
 
 		ClientRepoDBImpl cr = new ClientRepoDBImpl(username, password);
 		ClientService cs = new ClientServiceImpl(cr);
 		ClientController cc = new ClientController(cs);
 		
-		
+		// List of routes (endpoints) for javalin
 		app.get("/", (ctx) -> ctx.result("Welcome to the Banking API!"));
 		app.get("/clients/:clientID", cc.getClientById);
 		app.get("/clients", cc.getAllClients);
