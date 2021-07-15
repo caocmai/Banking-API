@@ -30,15 +30,19 @@ public class App {
 //		System.out.println("Enter AWS your root link to RDS");
 //		String link = sc.nextLine();
 //	
-	    System.out.println("Enter your PostgreSQL username");
+//		String endpoint = "caorevaturedb.c39sfp4pzzjr.us-east-2.rds.amazonaws.com";
+
+		System.out.println("Enter your Amazon Relational Database Service (RDS) with PostgreSQL endpoint: ");
+		String endpoint = sc.nextLine();
+	    System.out.println("Enter your PostgreSQL username: ");
 	    String username = sc.nextLine();
-	    
-	    System.out.println("Enter your PostgresSQL password");
+	    System.out.println("Enter your PostgresSQL password: ");
 	    String password = sc.nextLine();
 
-		ClientRepoDBImpl cr = new ClientRepoDBImpl(username, password);
+		ClientRepoDBImpl cr = new ClientRepoDBImpl(endpoint, username, password);
 		ClientService cs = new ClientServiceImpl(cr);
 		ClientController cc = new ClientController(cs);
+		
 		
 		// List of routes (endpoints) for javalin
 		app.get("/", (ctx) -> ctx.result("Welcome to the Banking API!"));

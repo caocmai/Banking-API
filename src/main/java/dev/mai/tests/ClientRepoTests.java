@@ -23,12 +23,14 @@ public class ClientRepoTests {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Run once before running tests.");
+		System.out.println("Enter your Amazon Relational Database Service (RDS) with PostgreSQL endpoint: ");
+		String endpoint = sc.nextLine();
 		System.out.println("Enter username");
 	    String username = sc.nextLine();
 	    System.out.println("Enter password");
 	    String password = sc.nextLine();
 
-		cr = new ClientRepoDBImpl(username, password);
+		cr = new ClientRepoDBImpl(endpoint, username, password);
 		
 	}
 	

@@ -78,3 +78,4 @@
 2021-07-09 08:11:03 DEBUG ClientController:106 - Debug: Create a single client with id: 100 failed
 2021-07-11 20:40:17 INFO  ClientController:237 - Info: Withdraw can't complete because insufficient funds
 2021-07-11 21:13:51 INFO  ClientController:31 - Info: Got all Clients
+2021-07-14 21:44:34 INFO  ClientController:31 - Info: Got all Clients

@@ -16,9 +16,45 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 	
 	public static Connection conn; 
 
-	public ClientRepoDBImpl(String username, String password) {
+	public ClientRepoDBImpl(String endpoint, String username, String password) {
 		super();
-		conn = JDBCConnection.getConnection(username, password);
+		conn = JDBCConnection.getConnection(endpoint, username, password);
+	}
+	
+	
+//	drop table if exists clients;
+//	drop table if exists accounts;
+//	drop table if exists client_accounts;
+//
+//	create table clients (
+//		c_id serial primary key,
+//		first_name VARCHAR(50) not null,
+//		last_name VARCHAR(50) not null
+//	);
+//
+//	create table accounts (
+//		a_id serial primary key,
+//		balance numeric(12, 2) default 0.00
+//	);
+//
+//	create table client_accounts (
+//		client_id int references clients(c_id) on delete set null,
+//		account_id int references accounts(a_id) on delete set null
+//	);
+	
+	public String createDB() {
+		String dropClientsTable = "DROP TABLE IF EXISTS clients";
+		String dropAccountsTable = "DROP TABLE IF EXISTS accounts";
+		String dropClientAccountsTable = "DROP TABLE IF EXISTS client_accounts";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(dropClientsTable);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		
+		return "Database Tables have been created";
 	}
 
 	@Override
