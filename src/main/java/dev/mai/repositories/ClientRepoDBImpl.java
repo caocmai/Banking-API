@@ -42,19 +42,67 @@ public class ClientRepoDBImpl implements ClientRepo, AccountRepo {
 //		account_id int references accounts(a_id) on delete set null
 //	);
 	
-	public String createDB() {
+	public String dropTablesIfExists() {
 		String dropClientsTable = "DROP TABLE IF EXISTS clients";
 		String dropAccountsTable = "DROP TABLE IF EXISTS accounts";
 		String dropClientAccountsTable = "DROP TABLE IF EXISTS client_accounts";
 		
 		try {
-			PreparedStatement ps = conn.prepareStatement(dropClientsTable);
+			PreparedStatement psDropClients = conn.prepareStatement(dropClientsTable);
+			PreparedStatement psDropAccounts = conn.prepareStatement(dropAccountsTable);
+			PreparedStatement psDropClientAccounts = conn.prepareStatement(dropClientAccountsTable);
+			psDropClients.execute();
+			psDropAccounts.execute();
+			psDropClientAccounts.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+		return "Database Tables have been dropped";
+	}
+	
+	private void createClientsTable() {
+		String createClientsTable = "CREATE TABLE clients("
+				+ "c_i SERIAL PRIMARY KEY,"
+				+ "first_name VARCHAR(50) NOT NULL,"
+				+ "last_name VARCHAR(50) NOT NULL"
+				+ ")";
 		
-		return "Database Tables have been created";
+		try {
+			PreparedStatement psCreateClients = conn.prepareStatement(createClientsTable);
+			psCreateClients.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void createAccounts() {
+		String createAccountsTable = "CREATE TABLE accounts ("
+				+ "a_id SERIAL PRIMARY KEY,"
+				+ "balance NUMERIC(12,2) DEFAULT 0.00"
+				+ ")";
+		
+		try {
+			PreparedStatement psCreateAccounts = conn.prepareStatement(createAccountsTable);
+			psCreateAccounts.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void createClientAccountsTable() {
+		String createClientAccountsTable = "CREATE TABLE client_accounts("
+				+ "client_id INT REFERENCES clients(c_id) ON DELETE SET NULL,"
+				+ "account_id INT REFERENCES accounts(a_id) ON DELETE SET NULL"
+				+ ")";
+		
+		try {
+			PreparedStatement psCreateClientAccounts = conn.prepareStatement(createClientAccountsTable);
+			psCreateClientAccounts.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
